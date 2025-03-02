@@ -8,34 +8,22 @@ import java.util.Optional;
 
 @Service
 public class CitiesService {
+
     @Autowired
-    private CitiesRepository cityRepository;
+    private CitiesRepository citiesRepository;
 
-    public List<Cities> findAllCities() {
-        return (List<Cities>) cityRepository.findAll();
+    // Get all cities from the database
+    public List<Cities> getAllCities() {
+        return citiesRepository.findAll();
     }
 
-    public Cities findCityById(long id) {
-        Optional<Cities> optionalCity = cityRepository.findById(id);
-        return optionalCity.orElse(null);
+    // Find a specific city by its ID
+    public Optional<Cities> getCityById(Long id) {
+        return citiesRepository.findById(id);
     }
 
-    public Cities createCity(Cities newCity) {
-        return cityRepository.save(newCity);
-    }
-
-    public Cities updateCity(long id, Cities updatedCity) {
-        Cities cityToUpdate = findCityById(id);
-
-        if (cityToUpdate != null) {
-            cityToUpdate.setName(updatedCity.getName());
-            cityToUpdate.setState(updatedCity.getState());
-            cityToUpdate.setPopulation(updatedCity.getPopulation());
-
-            return cityRepository.save(cityToUpdate);
-        }
-
-        return null;
+    // Create a new city and save it to the database
+    public Cities createCity(Cities city) {
+        return citiesRepository.save(city);
     }
 }
-
