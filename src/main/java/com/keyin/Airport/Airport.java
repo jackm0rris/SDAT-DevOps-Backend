@@ -1,52 +1,62 @@
 package com.keyin.Airport;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import com.keyin.Cities.Cities;
+import jakarta.persistence.*;
 
 @Entity
 public class Airport {
     @Id
-    @SequenceGenerator(name = "airport_sequence", sequenceName = "airport_sequence", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(generator = "airport_sequence")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private String code;
 
-    public long getId() {
+    @ManyToOne
+    @JoinColumn(name = "cities_id", nullable = false) // cities_id column
+    private Cities city;
 
+    // Default constructor
+    public Airport() {
+    }
+
+    // constructor
+    public Airport(String name, String code, Cities city) {
+        this.name = name;
+        this.code = code;
+        this.city = city;
+    }
+
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
-
-    public void setId(long id) {
-
+    public void setId(Long id) {
         this.id = id;
     }
 
-
     public String getName() {
-
         return name;
     }
 
-
     public void setName(String name) {
-
         this.name = name;
     }
 
-
     public String getCode() {
-
         return code;
     }
 
-
     public void setCode(String code) {
-
         this.code = code;
+    }
+
+    public Cities getCity() {
+        return city;
+    }
+
+    public void setCity(Cities city) {
+        this.city = city;
     }
 }
