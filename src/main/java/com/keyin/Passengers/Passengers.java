@@ -1,12 +1,14 @@
 package com.keyin.Passengers;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import com.keyin.Aircraft.Aircraft;
+import com.keyin.Cities.Cities;
+import jakarta.persistence.*;
+import java.util.List;
 
+// Entity representing a passenger
 @Entity
 public class Passengers {
+
     @Id
     @SequenceGenerator(name = "passengers_sequence", sequenceName = "passengers_sequence", allocationSize = 1, initialValue = 1)
     @GeneratedValue(generator = "passengers_sequence")
@@ -16,35 +18,35 @@ public class Passengers {
     private String lastName;
     private String phoneNumber;
 
-    public long getId() {
-        return id;
-    }
+    // Passenger belongs to one city
+    @ManyToOne
+    public Cities city;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    // Passenger can be linked to many aircraft
+    @ManyToMany
+    @JoinTable(
+            name = "passenger_aircraft",
+            joinColumns = @JoinColumn(name = "passenger_id"),
+            inverseJoinColumns = @JoinColumn(name = "aircraft_id")
+    )
+    private List<Aircraft> aircraft;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    // Getters and setters
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    public Cities getCity() { return city; }
+    public void setCity(Cities city) { this.city = city; }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    public List<Aircraft> getAircraft() { return aircraft; }
+    public void setAircraft(List<Aircraft> aircraft) { this.aircraft = aircraft; }
 }
