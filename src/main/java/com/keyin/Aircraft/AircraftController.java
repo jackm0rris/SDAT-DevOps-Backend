@@ -10,12 +10,12 @@ import java.util.List;
 public class AircraftController {
     @Autowired
     private AircraftService aircraftService;
-
+    // Get all aircraft's
     @GetMapping("/aircrafts")
     public List<Aircraft> getAllAircrafts() {
         return aircraftService.findAllAircrafts();
     }
-
+    // Get aircraft by id
     @GetMapping("/aircrafts/{id}")
     public Aircraft getAircraftsByID(@PathVariable long id) {
         return aircraftService.findAircraftById(id);
@@ -25,8 +25,8 @@ public class AircraftController {
     public Aircraft createAircraft(@RequestBody Aircraft newAircraft) {
         return aircraftService.createAircraft(newAircraft);
     }
-
-    @PutMapping("/aircraft/{id}")
+    // Update an aircraft
+    @PutMapping("/aircrafts/{id}")
     public Aircraft updateAircraft(@PathVariable long id, @RequestBody Aircraft updatedAircraft) {
         return aircraftService.updateAircraft(id, updatedAircraft);
     }

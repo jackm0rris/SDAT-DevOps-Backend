@@ -11,11 +11,11 @@ public class AircraftService {
     @Autowired
     private AircraftRepository aircraftRepository;
     private Aircraft updatedAirport;
-
+     // Get all aircraft's
     public List<Aircraft> findAllAircrafts() {
         return (List<Aircraft>) aircraftRepository.findAll();
     }
-
+    // Get aircraft's by id
     public Aircraft findAircraftById(long id) {
         Optional<Aircraft> optionalAircraft = aircraftRepository.findById(id);
 
@@ -25,7 +25,7 @@ public class AircraftService {
     public Aircraft createAircraft(Aircraft newAircraft) {
         return aircraftRepository.save(newAircraft);
     }
-
+    // update aircraft's
     public Aircraft updateAircraft(long id, Aircraft updatedAircraft) {
         Aircraft AircraftToUpdate = findAircraftById(id);
 

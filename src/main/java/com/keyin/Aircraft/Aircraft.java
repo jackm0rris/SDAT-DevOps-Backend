@@ -1,9 +1,8 @@
 package com.keyin.Aircraft;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import com.keyin.Passengers.Passengers;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Aircraft {
@@ -16,6 +15,11 @@ public class Aircraft {
     private String airlineName;
     private int numberOfPassengers;
 
+    @OneToMany
+    public List<Passengers> passengers;
+
+
+    // Getter and Setters
     public long getId() {
         return id;
     }
@@ -46,5 +50,13 @@ public class Aircraft {
 
     public void setNumberOfPassengers(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
+    }
+
+    public List<Passengers> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passengers> passengers) {
+        this.passengers = passengers;
     }
 }
