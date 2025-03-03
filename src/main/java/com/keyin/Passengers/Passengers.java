@@ -1,11 +1,13 @@
 package com.keyin.Passengers;
 
 import com.keyin.Aircraft.Aircraft;
+import com.keyin.Airport.Airport;
 import com.keyin.Cities.Cities;
 import jakarta.persistence.*;
 import java.util.List;
 
-// Entity representing a passenger
+
+// Represents a Passenger entity for the database
 @Entity
 public class Passengers {
 
@@ -14,15 +16,15 @@ public class Passengers {
     @GeneratedValue(generator = "passengers_sequence")
     private long id;
 
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+    private String firstName; // Passengers First Name
+    private String lastName; // Passengers Last Name
+    private String phoneNumber; // Passengers Phone Number
 
-    // Passenger belongs to one city
+
     @ManyToOne
     public Cities city;
 
-    // Passenger can be linked to many aircraft
+
     @ManyToMany
     @JoinTable(
             name = "passenger_aircraft",
@@ -31,7 +33,20 @@ public class Passengers {
     )
     private List<Aircraft> aircraft;
 
-    // Getters and setters
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "passenger_airport",
+            joinColumns = @JoinColumn(name = "passenger_id"),
+            inverseJoinColumns = @JoinColumn(name = "airport_id")
+    )
+    private List<Airport> airports;
+
+
+
+    // Getters and setters for each field
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -49,4 +64,8 @@ public class Passengers {
 
     public List<Aircraft> getAircraft() { return aircraft; }
     public void setAircraft(List<Aircraft> aircraft) { this.aircraft = aircraft; }
+
+
+    public List<Airport> getAirports() { return airports; }
+    public void setAirports(List<Airport> airports) { this.airports = airports; }
 }

@@ -1,6 +1,7 @@
 package com.keyin.Passengers;
 
 import com.keyin.Aircraft.Aircraft;
+import com.keyin.Airport.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,15 +46,18 @@ public class PassengersController {
         return passengersService.findAircraftForPassenger(id);
     }
 
+
+    // Get all airports linked to a passenger
+    @GetMapping("/{id}/airports")
+    public List<Airport> getAirportsForPassenger(@PathVariable long id) {
+        return passengersService.findAirportsForPassenger(id);
+    }
+
+
     // Link an aircraft to a passenger
     @PostMapping("/{passengerId}/aircraft/{aircraftId}")
     public ResponseEntity<String> addAircraftToPassenger(@PathVariable long passengerId, @PathVariable long aircraftId) {
         return passengersService.addAircraftToPassenger(passengerId, aircraftId);
     }
 
-    // Remove an aircraft from a passenger
-    @DeleteMapping("/{passengerId}/aircraft/{aircraftId}")
-    public ResponseEntity<String> removeAircraftFromPassenger(@PathVariable long passengerId, @PathVariable long aircraftId) {
-        return passengersService.removeAircraftFromPassenger(passengerId, aircraftId);
-    }
 }
