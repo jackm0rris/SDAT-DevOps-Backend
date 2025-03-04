@@ -13,7 +13,8 @@ import java.util.List;
 public class AirportController {
     @Autowired
     private AirportService airportService;
-    // get airports by specific city
+
+    // Get airports by specific city
     @GetMapping("/{cityId}/airports")
     public ResponseEntity<List<Airport>> getAirportsByCityId(@PathVariable Long cityId) {
         List<Airport> airports = airportService.getAirportsByCityId(cityId);
@@ -23,6 +24,7 @@ public class AirportController {
         return ResponseEntity.ok(airports);
     }
 
+    // Create a new airport for a specific city
     @PostMapping("/{cityId}/airports")
     public Airport createAirport(@PathVariable Long cityId, @RequestBody Airport airport) {
         // Set the city for the airport
@@ -30,5 +32,15 @@ public class AirportController {
         city.setId(cityId);
         airport.setCity(city);
         return airportService.createAirport(airport);
+    }
+
+    // Get all airports for aircraft operations
+    @GetMapping("/airports-for-operations")
+    public ResponseEntity<List<Airport>> getAirportsForAircraftOperations() {
+        List<Airport> airports = airportService.getAllAirports();
+        if (airports.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(airports);
     }
 }
